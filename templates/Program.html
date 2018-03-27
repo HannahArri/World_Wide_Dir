@@ -1,0 +1,41 @@
+{%extends 'Base.html' %}
+
+{% block body%}
+<form action="/search" method="POST" id="Search">
+    <select name="searchcriteria">
+        <option value="Country">Country</option>
+        <!--<option value="Program">Program</option>-->
+        <option value="Organization">University</option>
+        <option value="Degree">Degree</option>
+        <option value="Continent">Continent</option>
+    </select>
+    <input type="search" name="searchitem"/>
+    <input type="submit">
+</form>
+
+<table>
+
+        {% for post in programs %}
+            <tr>
+                <td>
+                    <!--<p>{{post}}</p>-->
+                    <p><b>University: </b>{{post.org}}</p>
+                    {% if post.logo_str() != '' %}
+                        <img src="{{url_for('static', filename= post.logo_str())}}" width="150" height="100"/>
+                    {% else %}
+                        <img src="{{url_for('static', filename='blank.jpg')}}" width="150" height="100"/>
+                    {% endif %}
+                    <p><b>Address: </b>{{post.addr_str()}}</p>
+                    <p><b>Link: </b>{{post.urls_str()}}</p>
+                    <p><b>Contact: </b>{{post.contacts_str()}}</p>
+                    <p><b>Degrees: </b>{{post.degrees_str()}}</p>
+                    <!--<p>Degrees Offered: {{post.Undergraduate}}</br>-->
+                                        <!--{{post.Graduate}}</br>-->
+                                        <!--{{post.Doctorate}}</p>-->
+                    <hr>
+                </td>
+            </tr>
+        {% endfor %}
+
+</table>
+{% endblock %}

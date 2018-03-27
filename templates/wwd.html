@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ title }}</h2>
+
+{% autoescape false %}
+
+{% for pgrm in pgrms %}
+    ------------------------------------- <br>
+    {{ pgrm.org }} <br><br>
+    {{ pgrm.addr }}<br><br>
+    {{ pgrm.urls }}<br><br>
+    {{ pgrm.contacts }}<br><br>
+    {{ pgrm.degrees }}<br><br>
+
+{% endfor %}
+{% endautoescape %}
+{% endblock %}

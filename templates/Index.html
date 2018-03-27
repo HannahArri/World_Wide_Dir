@@ -1,0 +1,29 @@
+{%extends 'Base.html' %}
+
+{% block body%}
+<form action="/search" method="POST" id="Search">
+    <select name="searchcriteria">
+        <option value="Country">Country</option>
+        <!--<option value="Program">Program</option>-->
+        <option value="Organization">University</option>
+        <option value="Degree">Degree</option>
+        <option value="Continent">Continent</option>
+    </select>
+    <input type="search" name="searchitem"/>
+    <input type="submit">
+</form>
+
+<table>
+
+            {% for post in programs %}
+                <tr>
+                    <td>
+                        <p onclick="get_data('{{post}}')">{{post}}</p>
+                    <!--<p>{{post.Country}}</p>-->
+                    <hr>
+                </td>
+            </tr>
+        {% endfor %}
+
+</table>
+{% endblock %}
