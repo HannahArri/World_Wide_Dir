@@ -17,7 +17,6 @@ def get_programs():
     if request.method == 'POST':
         value = request.form['searchitem']
         search_criteria = request.form['searchcriteria']
-        print(search_criteria + ":" + value)
         if search_criteria == 'Continent':
             data = DbCalls.get_programs_continent(value)
         elif search_criteria == 'Organization':
@@ -30,10 +29,11 @@ def get_programs():
     return render_template('Program.html', title="World Wide Directory", programs=data)
 
 
-@app.route('/continent/<string:value>', methods=['POST'])
-def get_continent_programs(value):
-    data = DbCalls.get_programs_continent(value)
-    return render_template('Program.html', title='World Wide Directory', programs=data)
+
+# @app.route('/continent/<string:value>', methods=['POST'])
+# def get_continent_programs(value):
+#     data = DbCalls.get_programs_continent(value)
+#     return render_template('Program.html', title='World Wide Directory', programs=data)
 
 
 app.run(debug=True)

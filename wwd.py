@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/stevens")
 def stevens():
-    DB_FILE = '/Users/jrr/Documents/Stevens/JonWWD/WWD.sqlite'
+    DB_FILE = '/home/hannah/World_Wide_Dir/WWD.sqlite'
 
     db = DB(DB_FILE)
 
@@ -18,7 +18,7 @@ def stevens():
 
 @app.route("/africa")
 def africa():
-    DB_FILE = '/Users/jrr/Documents/Stevens/JonWWD/WWD.sqlite'
+    DB_FILE = '/home/hannah/World_Wide_Dir/WWD.sqlite'
 
     db = DB(DB_FILE)
 
@@ -31,7 +31,7 @@ def africa():
 
 @app.route("/usa")
 def usa():
-    DB_FILE = '/Users/jrr/Documents/Stevens/JonWWD/WWD.sqlite'
+    DB_FILE = '/home/hannah/World_Wide_Dir/WWD.sqlite'
 
     db = DB(DB_FILE)
 

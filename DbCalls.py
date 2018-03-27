@@ -2,7 +2,6 @@ import sqlite3
 import queries
 
 sqlite_file = '/home/hannah/World_Wide_Dir/WWD.sqlite'
-logo_location = '/home/hannah/World_Wide_Dir/Logos'
 db = queries.DB(sqlite_file)
 
 def getrecords():
@@ -31,28 +30,30 @@ def get_continients():
 def get_programs_continent(continent):
     db = queries.DB(sqlite_file)
     with db.conn:
-        results = db.get_programs_continent(continent=continent)
+        results = [prgm.html() for prgm in db.get_programs_continent(continent=continent)]
     return results
 
 
 def search_country(country):
     db = queries.DB(sqlite_file)
     with db.conn:
-        results = db.get_programs_country(country)
+        results = [ prgm.html() for prgm in db.get_programs_country(country)]
+
     return results
 
 
 def search_degree(degree):
     db = queries.DB(sqlite_file)
     with db.conn:
-        results = db.get_programs_degree(degree)
+        results = [prgm.html() for prgm in db.get_programs_degree(degree)]
     return results
 
 
 def search_organization(org):
     db = queries.DB(sqlite_file)
     with db.conn:
-        results = db.get_program(org)
+        results = [db.get_program(org).html()]
+        print(results)
     return results
 
 def search_contact():

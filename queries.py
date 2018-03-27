@@ -3,7 +3,7 @@
 import sqlite3
 import json
 
-DB_FILE = '/Users/jrr/Documents/Stevens/JonWWD/WWD.sqlite'
+DB_FILE = '/home/hannah/World_Wide_Dir/WWD.sqlite'
 
 def n2br(s):
     """ replace \n with <br> for adding a break in Flask """
@@ -26,6 +26,8 @@ class Program:
         self.contacts = list() # list of class Contact
 
         self.degrees = list() # list of strings
+
+        self.logo = None # path for logo
 
     def addr_str(self):
         addr_blk =  "{}\n{}\n".format(self.school, self.address)
@@ -54,6 +56,9 @@ class Program:
     def degrees_str(self):
         return "\n".join([str(deg) for deg in self.degrees])
 
+    def logo_str(self):
+        return "\n".join([str(logo) for logo in self.logo])
+
     def __str__(self):
         """ format a program in the appropriate format including all data as a single, multiline string """
         return "{}\n\n{}\n\n{}\n\n{}\n\n{}\n".format(self.org, self.addr_str(), self.urls_str(), self.contacts_str(), self.degrees_str())
@@ -69,7 +74,8 @@ class Program:
                 'addr': n2br(self.addr_str()),
                 'urls': n2br(self.urls_str()),
                 'contacts': n2br(self.contacts_str()),
-                'degrees': n2br(self.degrees_str())}
+                'degrees': n2br(self.degrees_str()),
+                'logo': n2br(self.logo_str())}
 
 
 class Contact:
@@ -180,6 +186,7 @@ class DB:
             pgrm.urls = self.get_urls(org)
             pgrm.contacts = self.get_contacts(org)
             pgrm.degrees = self.get_degrees(org)
+            pgrm.logo = self.get_logo(org)
 
         return pgrm
 

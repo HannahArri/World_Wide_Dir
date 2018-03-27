@@ -13,29 +13,24 @@
     <input type="submit">
 </form>
 
-<table>
+{% autoescape false %}
 
-        {% for post in programs %}
-            <tr>
-                <td>
-                    <!--<p>{{post}}</p>-->
-                    <p><b>University: </b>{{post.org}}</p>
-                    {% if post.logo_str() != '' %}
-                        <img src="{{url_for('static', filename= post.logo_str())}}" width="150" height="100"/>
-                    {% else %}
-                        <img src="{{url_for('static', filename='blank.jpg')}}" width="150" height="100"/>
-                    {% endif %}
-                    <p><b>Address: </b>{{post.addr_str()}}</p>
-                    <p><b>Link: </b>{{post.urls_str()}}</p>
-                    <p><b>Contact: </b>{{post.contacts_str()}}</p>
-                    <p><b>Degrees: </b>{{post.degrees_str()}}</p>
-                    <!--<p>Degrees Offered: {{post.Undergraduate}}</br>-->
-                                        <!--{{post.Graduate}}</br>-->
-                                        <!--{{post.Doctorate}}</p>-->
-                    <hr>
-                </td>
-            </tr>
-        {% endfor %}
+{% for pgrm in programs %}
+    ------------------------------------- <br>
+    {{ pgrm.org }}
+    {% if pgrm.logo != '' %}
+        <img src="{{url_for('static', filename= pgrm.logo)}}" width="150" height="100" align="right" ALT="your logo goes here"/>
+    <!--&lt;!&ndash;{% else %}&ndash;&gt;-->
+        <!--<img src="{{url_for('static', filename='blank.jpg')}}" width="150" height="100" align="right"/>-->
+    {% endif %} <br><br>
+    {{ pgrm.addr }}<br><br>
+    {{ pgrm.urls }}<br><br>
+    {{ pgrm.contacts }}<br><br>
+    {{ pgrm.degrees }}<br><br>
 
-</table>
+{% endfor %}
+{% endautoescape %}
+
+
+
 {% endblock %}
