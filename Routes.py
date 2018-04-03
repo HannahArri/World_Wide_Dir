@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import DbCalls
-import collections
-import jinja2
+from Forms import Organization_Form
 
 app = Flask(__name__)
 
@@ -29,6 +28,34 @@ def get_programs():
     return render_template('Program.html', title="World Wide Directory", programs=data)
 
 
+@app.route('/add', methods=['Post', 'Get'])
+def add_org():
+    form = Organization_Form(request.form)
+    if form.validate() and request.method == 'POST':
+        org_name =form.org_name.data
+        sch=form.school_name.data
+        add =form.address1.data
+        city =form.city.data
+        state = form.state.data
+        zip = form.zip.data
+        country = form.country
+        cname = form.contact_name
+        ctitle = form.contact_title
+        email = form.email
+        pnum = form.phone_no.data
+        dtype = form.degree_type.data
+        dtitle = form.degree_title.data
+
+        data = DbCalls.Temp_org(org_name, sch, add, city, state, zip, country, cname, ctitle, email, pnum, dtype, dtitle)
+        data.insert()
+
+        return redirect(url_for('index'))
+
+    return render_template('Form.html', form = form)
+
+# @app.route('/add', methods = ['Post', 'Get'])
+# def add():
+#     return render_template('Form.html' )
 
 # @app.route('/continent/<string:value>', methods=['POST'])
 # def get_continent_programs(value):
