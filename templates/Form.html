@@ -1,0 +1,40 @@
+{%extends 'Base.html'%}
+
+{% macro render_field(field) %}
+ <p> <dt>{{ field.label }} :  {{ field(**kwargs)|safe }} </p>
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+{%block body%}
+
+<form method = 'post'>
+        <dl>
+            {{ render_field(form.org_name)}}<br>
+            {{ render_field(form.school_name)}}<br>
+            <h3>Address</h3><br>
+            {{ render_field(form.address1) }}<br>
+            {{ render_field(form.city) }}<br>
+            {{ render_field(form.state) }}<br>
+            {{ render_field(form.zip) }} <br>
+            {{ render_field(form.country) }}<br>
+            <h3> Contact Info</h3><br>
+            {{ render_field(form.contact_name) }}<br>
+            {{ render_field(form.contact_title) }} <br>
+            {{ render_field(form.email) }}<br>
+            {{ render_field(form.phone_no) }} <br>
+            <h3>Degrees</h3>
+            {{ render_field(form.degree_type) }}<br>
+            {{ render_field(form.degree_title) }}
+        </dl>
+        <input type="submit" value="Submit">
+
+
+</form>
+{% endblock%}

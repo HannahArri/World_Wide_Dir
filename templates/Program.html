@@ -13,16 +13,16 @@
     <input type="submit">
 </form>
 
+<form action = "/add" method = "Post" >
+    <input type="submit" value="Add University"/>
+</form>
+
 {% autoescape false %}
 
 {% for pgrm in programs %}
     ------------------------------------- <br>
     {{ pgrm.org }}
-    {% if pgrm.logo != '' %}
-        <img src="{{url_for('static', filename= pgrm.logo)}}" width="150" height="100" align="right" ALT="your logo goes here"/>
-    <!--&lt;!&ndash;{% else %}&ndash;&gt;-->
-        <!--<img src="{{url_for('static', filename='blank.jpg')}}" width="150" height="100" align="right"/>-->
-    {% endif %} <br><br>
+    <img src="{{url_for('static', filename= pgrm.logo)}}" class ="imagesize" align="right" ALT="your logo goes here"/><br><br>
     {{ pgrm.addr }}<br><br>
     {{ pgrm.urls }}<br><br>
     {{ pgrm.contacts }}<br><br>

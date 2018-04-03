@@ -135,7 +135,7 @@ class DB:
 
     def get_countries(self):
         """ return a list of countries as strings """
-        query = "select distinct(country) from orgs order by country"
+        query = "select distinct(country) from orgs order by country collate nocase"
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
@@ -151,7 +151,16 @@ class DB:
 
     def get_programs_continent(self, continent):
         """ return a list of Programs for by continent """
-        query = "select org from orgs where continent='{}'".format(continent)
+        query = "select org from orgs where continent='{}' collate nocase".format(continent)
+        c = self.conn.cursor()
+        c.execute(query)
+        results = c.fetchall()
+
+        return [self.get_program(result[0]) for result in results]
+
+    def get_programs_degree(self, degree):
+        """ return a list of Programs for by continent """
+        query = "select org from degrees where level='{}' collate nocase".format(degree)
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
@@ -160,7 +169,7 @@ class DB:
 
     def get_programs_country(self, country):
         """ return a list of Programs for by country """
-        query = "select org from orgs where country='{}'".format(country)
+        query = "select org from orgs where country='{}' collate nocase".format(country)
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
@@ -171,15 +180,17 @@ class DB:
         """ Retrieve a specific org and all of its data from the database
             Return and instance of class Program to reflect the data or return None
         """
+
         query = 'select org, school, continent, country, address, city, state, zip\
-                   from orgs where org="{}"'.format(org)
+                   from orgs where org="{}" collate nocase'.format(org)
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
 
         pgrm = None
+        print(org,results)
         if results:
-            assert 0 <= len(results) <= 1
+            # assert 0 <= len(results) <= 1
             org, school, continent, country, address, city, state, zip = results[0]
             pgrm = Program(org, school, continent, country, address, city, state, zip)
 
@@ -187,14 +198,14 @@ class DB:
             pgrm.contacts = self.get_contacts(org)
             pgrm.degrees = self.get_degrees(org)
             pgrm.logo = self.get_logo(org)
-
+        
         return pgrm
 
     def get_contacts(self, org):
         """ Retrieve a list of contacts for a specific org 
         """
         query = 'select org, prefix, first_name, last_name, suffix, title, email1, dept, office, phone\
-                   from contacts where org="{}"'.format(org)
+                   from contacts where org="{}" collate nocase'.format(org)
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
@@ -208,7 +219,7 @@ class DB:
         """ Retrieve a the contacts for a specific org and all of its data from the database
             Return a list of instances of class Contact to reflect the data or return None
         """
-        query = 'select degree from degrees where org="{}" order by level'.format(org)
+        query = 'select degree from degrees where org="{}" order by level collate nocase'.format(org)
         c = self.conn.cursor()
         c.execute(query)
         results = c.fetchall()
