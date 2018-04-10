@@ -13,17 +13,19 @@
     <input type="submit">
 </form>
 
-<table>
+{% autoescape false %}
 
-            {% for post in programs %}
-                <tr>
-                    <td>
-                        <p onclick="get_data('{{post}}')">{{post}}</p>
-                    <!--<p>{{post.Country}}</p>-->
-                    <hr>
-                </td>
-            </tr>
-        {% endfor %}
+{% for pgrm in programs %}
+<div onclick="getdata({{ pgrm.org }})">
+    ------------------------------------- <br>
+    {{ pgrm.org }}
+    <img src="{{url_for('static', filename= pgrm.logo)}}" class ="imagesize" align="right" ALT="your logo goes here"/><br><br>
+    {{ pgrm.addr }}<br><br>
+    {{ pgrm.urls }}<br><br>
+    {{ pgrm.contacts }}<br><br>
+    {{ pgrm.degrees }}<br><br>
+</div>
+{% endfor %}
+{% endautoescape %}
 
-</table>
 {% endblock %}

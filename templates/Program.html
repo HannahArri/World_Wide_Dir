@@ -20,14 +20,15 @@
 {% autoescape false %}
 
 {% for pgrm in programs %}
+<div >
     ------------------------------------- <br>
-    {{ pgrm.org }}
+    <p onclick="get_data('{{ pgrm.org }}')"><b>{{ pgrm.org }}</b></p>
     <img src="{{url_for('static', filename= pgrm.logo)}}" class ="imagesize" align="right" ALT="your logo goes here"/><br><br>
     {{ pgrm.addr }}<br><br>
     {{ pgrm.urls }}<br><br>
     {{ pgrm.contacts }}<br><br>
     {{ pgrm.degrees }}<br><br>
-
+</div>
 {% endfor %}
 {% endautoescape %}
 

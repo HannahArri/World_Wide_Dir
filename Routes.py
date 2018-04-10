@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    data = DbCalls.get_continients()
-    return render_template('Index.html', title='World Wide Directory', programs=data)
+    data = DbCalls.get_all_records()
+    return render_template('Index.html', title="World Wide Directory", programs=data)
 
 
 @app.route('/search', methods=['POST'])
@@ -38,14 +38,16 @@ def add_org():
         city =form.city.data
         state = form.state.data
         zip = form.zip.data
-        country = form.country
-        cname = form.contact_name
-        ctitle = form.contact_title
-        email = form.email
+        country = form.country.data
+        cname = form.contact_name.data
+        ctitle = form.contact_title.data
+        email = form.email.data
         pnum = form.phone_no.data
         dtype = form.degree_type.data
         dtitle = form.degree_title.data
 
+        print('org_name:',org_name,'Zip:', zip, 'cname:',cname,'dtitle:', dtitle)
+        #values = (org_name, sch, add, city, state, zip, country, cname, ctitle, email, pnum, dtype, dtitle)
         data = DbCalls.Temp_org(org_name, sch, add, city, state, zip, country, cname, ctitle, email, pnum, dtype, dtitle)
         data.insert()
 
@@ -57,10 +59,10 @@ def add_org():
 # def add():
 #     return render_template('Form.html' )
 
-# @app.route('/continent/<string:value>', methods=['POST'])
-# def get_continent_programs(value):
-#     data = DbCalls.get_programs_continent(value)
-#     return render_template('Program.html', title='World Wide Directory', programs=data)
+@app.route('/org/<string:value>', methods=['POST'])
+def get_continent_programs(value):
+    data = DbCalls.search_organization(value)
+    return render_template('Program.html', title='World Wide Directory', programs=data)
 
 
 app.run(debug=True)

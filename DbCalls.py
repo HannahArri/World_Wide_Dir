@@ -1,7 +1,8 @@
 import sqlite3
 import queries
+import os
 
-sqlite_file = '/home/hannah/World_Wide_Dir/WWD.sqlite'
+sqlite_file = os.path.join(os.path.dirname(__file__), 'WWD.sqlite')
 db = queries.DB(sqlite_file)
 
 class Temp_org():
@@ -21,33 +22,27 @@ class Temp_org():
         self.degree_title = dtitle
 
     def insert(self):
-        query="insert into temp('org_name', 'school_name', 'address', 'city'," \
-              "'state', 'country', 'cname', 'ctitle', 'email', 'phoneno', 'level', 'degree', 'url', 'logo') " \
-              "values('{}', '{}', '{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}')" \
-              "".format(self.org_name,self.school_name, self.address1, self.city, self.state, self.country,
-                         self.contact_name, self.contact_title, self.email, self.phone_no, self.degree_type,
-                         self.degree_title, "", "" )
+        query='''INSERT INTO temp( org_name, school_name, address, city, state, country, cname,
+        ctitle, email, phoneno, level, degree, url, logo)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+
+        data=(self.org_name,self.school_name, self.address1, self.city, self.state, self.country, self.contact_name,
+                         self.contact_title, self.email, self.phone_no, self.degree_type,self.degree_title, "", "" )
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
-        c.execute(query)
-        print(c.lastrowid)
+        c.execute(query, data)
+        conn.commit()
 
-def getrecords():
-    query = """select * from WWD Order By Continent;"""
 
-    conn = sqlite3.connect(sqlite_file)
-    c = conn.cursor()
-    executed_query = c.execute(query)
-    results = c.fetchall()
-    col_name = [name[0] for name in executed_query.description]
 
-    # convert the query results into a list of dictionaries to pass to the template
-    data = [dict(zip(col_name, r)) for r in results]
-
-    conn.close()  # close the connection to close the database
+def get_all_records():
+    db = queries.DB(sqlite_file)
+    with db.conn:
+        data = [prgm.html() for prgm in db.get_records()]
     return data
 
-def get_continients():
+
+def get_continents():
     db = queries.DB(sqlite_file)
     with db.conn:
         results = db.get_continents()

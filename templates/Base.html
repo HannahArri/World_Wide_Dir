@@ -13,7 +13,7 @@
         function get_data(value){
             alert(value)
             $.ajax({
-                    url:'/continent/'+value,
+                    url:'/org/'+value,
                     type:'POST',
                     success:function(response) {
                         console.log(response);
@@ -22,6 +22,10 @@
                         console.log(error);
                      }
                 });
+        }
+
+        function showupdate() {
+
         }
 
     </script>

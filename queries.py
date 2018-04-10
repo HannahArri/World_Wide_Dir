@@ -1,9 +1,9 @@
 """ Extract the data from the WWD Sqlite3 database to recreate the WWD directory """
 
 import sqlite3
-import json
+import os
 
-DB_FILE = '/home/hannah/World_Wide_Dir/WWD.sqlite'
+DB_FILE = os.path.join(os.path.dirname(__file__), 'WWD.sqlite')
 
 def n2br(s):
     """ replace \n with <br> for adding a break in Flask """
@@ -158,6 +158,15 @@ class DB:
 
         return [self.get_program(result[0]) for result in results]
 
+    def get_records(self):
+        query = "select org from orgs"
+
+        c = self.conn.cursor()
+        c.execute(query)
+        results = c.fetchall()
+
+        return [self.get_program(result[0]) for result in results]
+
     def get_programs_degree(self, degree):
         """ return a list of Programs for by continent """
         query = "select org from degrees where level='{}' collate nocase".format(degree)
@@ -188,7 +197,6 @@ class DB:
         results = c.fetchall()
 
         pgrm = None
-        print(org,results)
         if results:
             # assert 0 <= len(results) <= 1
             org, school, continent, country, address, city, state, zip = results[0]
